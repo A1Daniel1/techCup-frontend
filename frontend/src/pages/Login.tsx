@@ -1,23 +1,28 @@
 import { useState } from "react";
+import { login } from "../services/authService";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!email.endsWith("@escuelaing.edu.co")) {
-      alert("Debe usar su correo institucional");
+  
+    if (!email.endsWith("@universidad.edu")) {
+      alert("Debe usar un correo institucional");
       return;
     }
-
-    console.log({
-      email,
-      password
-    });
+  
+    try {
+      const user = await login(email, password);
+  
+      console.log("Usuario autenticado:", user);
+  
+    } catch (error) {
+      alert("Correo o contraseña incorrectos");
+    }
   };
-
+  
   return (
     <div style={styles.page}>
       <div style={styles.card}>
