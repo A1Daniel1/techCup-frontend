@@ -4,52 +4,109 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    console.log("Correo:", email);
-    console.log("Contraseña:", password);
+
+    if (!email.endsWith("@escuelaing.edu.co")) {
+      alert("Debe usar su correo institucional");
+      return;
+    }
+
+    console.log({
+      email,
+      password
+    });
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Inicio de sesión</h2>
+    <div style={styles.page}>
+      <div style={styles.card}>
+        <h1 style={styles.title}>TechCup Futbol</h1>
+        <p style={styles.subtitle}>Inicio de sesión</p>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <label>Correo institucional</label>
-        <input
-          type="email"
-          placeholder="usuario@universidad.edu"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit} style={styles.form}>
 
-        <label>Contraseña</label>
-        <input
-          type="password"
-          placeholder="********"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <label>Correo institucional</label>
+          <input
+            type="email"
+            placeholder="usuario@escuelaing.edu.co"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={styles.input}
+          />
 
-        <button type="submit">Iniciar sesión</button>
-      </form>
+          <label>Contraseña</label>
+          <input
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={styles.input}
+          />
+
+          <button type="submit" style={styles.button}>
+            Iniciar sesión
+          </button>
+
+        </form>
+      </div>
     </div>
   );
 }
 
 const styles = {
-  container: {
+  page: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "#f4f6f8",
+  },
+
+  card: {
+    width: "350px",
+    padding: "40px",
+    borderRadius: "10px",
+    background: "white",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
     display: "flex",
     flexDirection: "column" as const,
-    alignItems: "center",
-    marginTop: "100px",
+    gap: "15px",
   },
+
+  title: {
+    textAlign: "center" as const,
+    marginBottom: "5px",
+  },
+
+  subtitle: {
+    textAlign: "center" as const,
+    color: "#666",
+    marginBottom: "20px",
+  },
+
   form: {
     display: "flex",
     flexDirection: "column" as const,
-    width: "300px",
     gap: "10px",
+  },
+
+  input: {
+    padding: "10px",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+  },
+
+  button: {
+    marginTop: "10px",
+    padding: "12px",
+    border: "none",
+    borderRadius: "6px",
+    background: "green",
+    color: "white",
+    fontWeight: "bold" as const,
+    cursor: "pointer",
   },
 };
